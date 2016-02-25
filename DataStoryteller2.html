@@ -1,0 +1,157 @@
+<html>
+<head>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="./bower_components/c3/c3.css" rel="stylesheet" type="text/css">
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="./bower_components/c3/c3.min.js"></script>
+
+</head>
+<body>
+    <h1 class = "text-center">Data Storyteller - <a href="./DataStoryteller.html">IPO Data</a> / Rideshare Data</h1>
+    <h4 class = "text-center">Howard Tsai</h4>
+    <h2 style = "margin: 10px">Market Share of Popular Ridesharing Apps by Country</h2>
+    <div class = "text-center">
+    <button onclick = "loadData(USAData, USAData2)">USA</button>
+    <button onclick = "loadData(IndiaData, IndiaData2)">India</button>
+    <button onclick = "loadData(AsiaData, AsiaData2)">Asia</button>
+    </div>
+	<div id="chart"></div>
+    <h2 style = "margin-left : 10px">Growth of Ridesharing Apps Market Share by Country</h2>
+    <div class = "text-center">
+    <button onclick = "loadData(USAData, USAData2)">USA</button>
+    <button onclick = "loadData(IndiaData, IndiaData2)">India</button>
+    <button onclick = "loadData(AsiaData, AsiaData2)">Asia</button>
+    </div>
+    <div id="chart2"></div>
+    <br></br>
+    <div style = "margin: 10px"> While Uber is not the market leader in two of the three major markets, Uber did see increasing growth rates in market share across Android Phones in all of the major markets. Use the buttons to view the data of each of the three major markets.</div>
+	<script>
+    //Data definitions for graphs of market share
+    var USAData = [
+        ['x', 1, 2, 3, 4, 5],
+        ['Uber', 11.70, 13.96,  15.95,  18.75,  20.35],
+        ['Lyft', 1.73, 1.77, 1.79, 1.66, 1.55]
+      ];
+    var IndiaData = [
+        ['x', 1, 2, 3, 4, 5],
+        ['Uber', .85, .96,  1.02,  2.01,  3.51],
+        ['Ola Cabs', 4.95, 6.23, 7.60, 8.51, 9.76],
+        ['TaxiForSure', 1.50, 1.46, 1.42, 2.35, 3.13]
+      ];  
+    var AsiaData = [
+        ['x', 1, 2, 3, 4, 5],
+        ['Uber', .46, .46, .46, .51, .64],
+        ['Easy Taxi', .75, .72,  .79,  .68,  .66],
+        ['GrabTaxi', .86, .86, .87, 1.03, 1.51]
+      ];
+    //Data definitions for graphs of growth of market share
+    var USAData2 = [
+        ['x', 2, 3, 4, 5],
+        ['Uber', 2.26, 1.99,  2.80,  1.60],
+        ['Lyft', 0, 0, 0, 0],
+      ];
+    var IndiaData2 = [
+        ['x', 2, 3, 4, 5],
+        ['Uber', .11, .06,  .99,  1.5],
+        ['Ola Cabs', 1.28, 1.37, .91, 1.25],
+        ['TaxiForSure', -.04, -.04, .93, .78]
+      ];  
+    var AsiaData2 = [
+        ['x', 2, 3, 4, 5],
+        ['Uber', 0, 0, .05, .13],
+        ['Easy Taxi', -.03, .07,  -.11,  -.02],
+        ['GrabTaxi', 0, .01, .16, .48]
+      ];
+
+    //Bar graph of market share of ridesharing apps
+	var chart = c3.generate({
+    bindto: '#chart',
+    padding: {
+            right: 10,
+        },
+    data: {
+    	x: 'x',
+        type: 'bar',
+      columns: USAData
+    },
+    axis : {
+        x : {
+            tick: {
+                format: returnmonth
+            }
+        },
+        y : {
+            label: {
+                text: 'Percent of Market Share',
+                position: 'outer-middle'
+            }
+        }
+    },
+    tooltip: {
+        format: {
+            title: function (d) { return 'Percent of Market Share in ' + returnmonth(d); },
+            value: function (value, ratio, id) {
+                return value + '%';
+            }
+        }
+    }
+    });
+    
+    //Function to load country data off of button click
+    function loadData(x, x2) { 
+        chart.load({
+            columns : x,
+            unload: true
+        });
+        chart2.load({
+            columns : x2,
+            unload: true
+        });
+
+    }
+
+    //Function to return the month name for X-Axis
+    function returnmonth(x) { 
+                    var month = ['January', 'February', 'March', 'April', 'May']
+                    return month[x-1]; }
+
+
+    //Line graph of percent growth of market share of ridesharing apps
+    var chart2 = c3.generate({
+    bindto: '#chart2',
+    padding: {
+            right: 10,
+        },
+    data: {
+        x: 'x',
+      columns: [
+        ['x', 2, 3, 4, 5],
+        ['Uber', 2.26, 1.99,  2.80,  1.60],
+        ['Lyft', 0, 0, 0, 0],
+      ]
+    },
+    axis : {
+        x : {
+            tick: {
+                format: returnmonth
+            }
+        },
+        y : {
+            label: {
+                text: 'Percent Growth of Market Share',
+                position: 'outer-middle'
+            }
+        }
+    },
+    tooltip: {
+        format: {
+            title: function (d) { return 'Percent Growth Between ' + returnmonth(d-1) + ' and ' + returnmonth(d); },
+            value: function (value, ratio, id) {
+                return value + '%';
+            }
+        }
+    }
+    });
+	</script>
+</body>
+</html>

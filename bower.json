@@ -1,0 +1,23 @@
+{
+  "name": "DataStoryteller",
+  "version": "0.0.0",
+  "authors": [
+    "howietsai <howietsai@gmail.com>"
+  ],
+  "description": "Data Storyteller Exercise",
+  "main": "DataStoryteller.html",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "c3": "~0.4.10"
+  }
+}
